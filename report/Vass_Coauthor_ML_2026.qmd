@@ -65,30 +65,42 @@ $$
 q = -\lambda \frac{\mathrm{d}T}{\mathrm{d}z}.
 $$ {#eq-fourier}
 
-where $\lambda$ is the bulk thermal conductivity of the rock and $\mathrm{d}T/\mathrm{d}z$ the vertical temperature gradient. The gradient is measured directly in high-precision borehole temperature logs sampled every 1 cm and averaged over a 1 m moving window. On the other hand $\lambda$ is not measured in-situ. @fuchs2010 first estimate the bulk thermal conductivity of each samle using: 
-
+where $\lambda$ is the bulk thermal conductivity of the rock and $\mathrm{d}T/\mathrm{d}z$ the vertical temperature gradient. The gradient is measured directly in high-precision borehole temperature logs sampled every 1 cm and averaged over a 1 m moving window. On the other hand $\lambda$ is not measurable in situ and must instead be determined on core samples in the laboratory. @fuchs2010 measured it by optical scanning [@popov1999], which records the maximum temperature rise $\Theta$ on the heating line behind a moving laser heat source (@fig-optical-scanning) and converts it to a conductivity by also scanning a reference standard of known conductivity $\lambda_s$ alongside the sample:
 $$
-\lambda = \lambda_s \frac{\Theta_s}{\Theta},
-$$
+\lambda = \lambda_s \frac{\Theta_s}{\Theta}
+$$ {#eq-optical}
 
-where $\Theta$ is the maximum temperature rise, with the subscript s denoting a reference standard. Then they calculate the matrix thermal conductivity $\lambda_{\text{matrix}}$ using two methods, which we validate in this project. First, a geometric mean model for the bulk conductivity of saturated samples:
+[@fuchs2010, Eq. 2]. Each sample was scanned at least three times, dry and water-saturated, and the results corrected to in-situ temperature after @sass1992. The corrected, water-saturated values are used as the input for the re-analysis in this project. 
 
+
+![The optical-scanning apparatus, after @popov1999. A reference standard of known conductivity (1) heads a row of samples (2) laid along the scanning line; the heat source (3) and the infrared radiometers (4) sit on a carriage that travels beneath the whole row in a single pass. Because source power and source–sensor distance are then identical over standard and samples, they cancel in the ratio $\Theta_\text{R}/\Theta$ and no absolute calibration is needed.](figures/popov_os_apparatus.png){#fig-optical-scanning width=80%}
+
+@fuchs2010 derive matrix conductivity, $\lambda_{\text{matrix}}$, in two independent ways. The first inverts the geometric-mean mixing law [@fuchs2010, Eq. 3]:
 $$
 \lambda_{\text{satM}} = \lambda_{\text{matrix}}^{1-\phi} \cdot \lambda_{\text{pore}}^{\phi} \rightarrow \lambda_{\text{matrix}}^{1-\phi} = \frac{\lambda_{\text{satM}}}{\lambda_{\text{pore}}^{\phi}}
+$$ {#eq-geom1}
+
+using the measured bulk conductivity $\lambda_{\text{satM}}$ and the effective porosity. Their second approach computes $\lambda_{\text{matrix}}$ as a volume-weighted geometric mean of mineral conductivities obtained from prior literature:
+
 $$
+\lambda_{\text{satM}} = \Pi_{i=1}^{n} \cdot \lambda_{\text{i}}^{\phi}
+$$ {#eq-geom2}
 
-
-
-
-
-First they estimate bulk lam of each sample under saturated conditions from eq 2., which we take as our input data, then they calculate the matrix lam w lambda_bulk = (lambda_matrix ^ (1-phi))  ×  (lambda_water ^ phi) -> eq 3, then in another different way: eq 4 using literature values for the lams of each mineral. we test both.
-
-
- and is instead obtained from core measurements, corrected to in-situ conditions, or estimated indirectly [@beardsmore2001; @clauser1995].
+[@fuchs2010, Eq. 5]. This report reproduces their first approach.
 
 [TODO: 1–2 paragraphs — why $\lambda$ is the limiting uncertainty in basin-scale heat-flow
 assessment; why core coverage is always sparse; why an empirical/statistical predictor
 of $\lambda$ from routinely logged properties would be valuable.]
+
+Of the two terms in @eq-fourier only the gradient is easy: temperature logs constrain it
+tightly, while $\lambda$ must be carried from a few decimetres of core to hundreds of
+metres of rock, so it is $\lambda$ that sets the uncertainty in $q$ [@beardsmore2001;
+@clauser1995]. Core coverage compounds this systematically, since coring targets reservoir
+intervals and leaves the overburden supplying most of the thermal resistance sampled least.
+Porosity, density, sonic and gamma logs, by contrast, run continuously and exist in wells
+that were never cored. If $\lambda$ could be predicted from them, sparse core measurements
+would become a continuous conductivity profile and, with the temperature log, a continuous
+heat flow — provided the relationship is strong enough at sample scale to be useful.
 
 @fuchs2010 addressed this by measuring $\lambda$ and effective porosity on 74
 sandstone cores from eight NEGB boreholes with the optical-scanning method
@@ -164,14 +176,13 @@ radiometer records the maximum temperature rise $\Theta$ on the heating line tra
 the source (@fig-optical-scanning). For a steady, moving line source this rise is
 inversely proportional to conductivity, $\Theta = Q / (2\pi x \lambda)$, with $Q$ the
 source power and $x$ the source–sensor distance [@popov1999]. Absolute calibration is
-avoided by aligning the sample with reference standards of known $\lambda_\text{R}$ in
-the same scan, so that $\lambda = \lambda_\text{R}\,\Theta_\text{R}/\Theta$. The
+avoided by laying a reference standard of known $\lambda_\text{R}$ in the same row as the
+samples and scanning both in one pass, so that $\lambda = \lambda_\text{R}\,\Theta_\text{R}/\Theta$. The
 method is contactless and non-destructive, needs no polished surface, and resolves
 $\lambda$ continuously along the core rather than as a single bulk value, which is why
 @fuchs2010 could sample nine formations from a limited set of cores. Its quoted accuracy
 of about 3 % sets the noise floor of every quantity derived below.
 
-![Principle of the optical-scanning method, after @popov1999. The heat source and the infrared radiometer traverse the sample at velocity $V$; $O$ is the heat spot, $S$ the radiometer detection area, and $A$, $B$, $C$ the principal axes of the thermal-conductivity tensor at angles $\alpha$, $\beta$, $\gamma$ to the line of scanning.](figures/popov_optical_scanning.png){#fig-optical-scanning width=68%}
 
 **Geometric-mean mixing model.** Bulk conductivity of a saturated porous rock is
 modelled as a volume-weighted geometric mean of the mineral matrix and the pore water
