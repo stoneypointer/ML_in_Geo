@@ -1,0 +1,7 @@
+# Quarto build artefacts
+.quarto/
+*_files/
+*.typ
+# ...but _symbols.typ and the extension template are SOURCE, not artefacts
+!_symbols.typ
+!_extensions/**/*.typ
